@@ -86,9 +86,9 @@ then
 
 	if [ $? -eq 0 ]
 	then
+		DECKY_LOADER_STOPPED=true
 		echo Decky Loader Plugin Loader service successfully disabled.
-		echo Once the script has finished installing Waydroid, the Decky Loader Plugin Loader service will be re-enabled.
-	  	echo You can also reboot the Steam Deck to re-activate the Decky Loader Plugin Loader service.
+		echo It will be automatically re-enabled once the installer finishes.
 	else
 		echo Error ecountered when stopping the Decky Loader Plugin Loader service.
 		echo Exiting immediately.

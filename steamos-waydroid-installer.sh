@@ -114,6 +114,10 @@ then
 	echo "*** build and install binder from source ***" &>> $LOGFILE
 	cd $BINDER_DIR && makepkg -f &>> $LOGFILE && \
 		echo -e "$current_password\n" | sudo -S pacman -U --noconfirm binder_linux-dkms*.zst &>> $LOGFILE && \
+		echo -e "$current_password\n" | sudo -S mkdir -p /usr/lib/modules/$(uname -r)/updates/dkms &>> $LOGFILE && \
+		echo -e "$current_password\n" | sudo -S cp /var/lib/dkms/binder/1/$(uname -r)/x86_64/module/binder_linux.ko.zst \
+			/usr/lib/modules/$(uname -r)/updates/dkms/ &>> $LOGFILE && \
+		echo -e "$current_password\n" | sudo -S depmod -a &>> $LOGFILE && \
 		echo -e "$current_password\n" | sudo -S modprobe binder_linux device=binder,hwbinder,vndbinder &>> $LOGFILE
 
 	if [ $? -eq 0 ]	
@@ -380,6 +384,13 @@ EOF
 	echo -e "$current_password\n" | sudo systemctl stop waydroid-container.service
 	unmount_waydroid_var
 	mv extras/waydroid.img ~/Android_Waydroid/waydroid.img
+fi
+
+# restart Decky Loader if we stopped it at the beginning
+if [ "$DECKY_LOADER_STOPPED" == "true" ]
+then
+	echo Re-enabling Decky Loader Plugin Loader service.
+	echo -e "$current_password\n" | sudo -S systemctl start plugin_loader.service &> /dev/null
 fi
 
 # all done! Display dialog box for Gaming Mode
