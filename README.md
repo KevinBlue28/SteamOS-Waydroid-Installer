@@ -1,4 +1,5 @@
-# DONT USE THIS ON SEAMOS 3.8 IT WILL BREAK DESKTOP MODE!
+**DONT USE THIS ON SEAMOS 3.8 IT WILL BREAK DESKTOP MODE!**\
+**Use the `testing` branch for the meantime.**
 
 # SteamOS Android Waydroid Installer
 
